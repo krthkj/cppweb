@@ -70,14 +70,12 @@ int main(int argc, char* argv[]) {
   //CROW_ROUTE(app, "/testdb")
   CROW_ROUTE(app, "/")
     ([&collection](){
-//      mongocxx::options::find opts;
-//      opts.skip(9);
-//      opts.limit(10);
-//      auto docs = collection.find({}, opts);
-      auto docs = collection.find({});
+      mongocxx::options::find opts;
+      opts.limit(25);
+      auto docs = collection.find({}, opts);
       std::ostringstream os;
       for(auto &&doc : docs){
-        cout << bsoncxx::to_json(doc) << "\n";
+        //cout << bsoncxx::to_json(doc) << "\n";
         os << bsoncxx::to_json(doc) << "\n";
       }
       return crow::response(os.str());
